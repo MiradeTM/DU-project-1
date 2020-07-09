@@ -5,14 +5,33 @@
  *
  * Made By MaterializeCSS.com
  */
-
-nav ul a,
+#index-banner {
+  height: 200px;
+  min-height: 200px;
+}
+ nav ul a,
 nav .brand-logo {
-  color: #444;
+  color: #011627;
+}
+
+nav.dark {
+  background-color: #011627;
+
+}
+
+.new-teal-text {
+color: #2ec4b6;
+
+}
+
+.new-red-lighten-1 {
+  background-color: #e71d36;
+  color: #fdfffc;
 }
 
 p {
   line-height: 2rem;
+  color:  #011627;
 }
 
 .sidenav-trigger {
@@ -52,6 +71,7 @@ p {
   font-size: inherit;
 }
 
-footer.page-footer {
+.page-footer {
   margin: 0;
+  background-color: #011627;
 }
