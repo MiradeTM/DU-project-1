@@ -5,7 +5,10 @@
  *
  * Made By MaterializeCSS.com
  */
-
+#index-banner {
+  height: 200px;
+  min-height: 200px;
+}
  nav ul a,
 nav .brand-logo {
   color: #011627;
