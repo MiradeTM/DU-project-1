@@ -39,9 +39,15 @@ $.ajax(settings).done(function (response) {
   console.log(response);
 });
 
-fnStepTwo(3);
+fnStepTwo(2);
 
 //ajax call for Skyscanner
+
+// action functions
+function fnSave() {
+	// add primary destination to local obj array
+}
+
 
 // step functions
 function fnStepOne() {
@@ -83,7 +89,7 @@ function fnStepTwo(st) {
   // row 2 // buttons
   // more info button
   let el3 = $(`<div class="col m6" style="text-align:right;">`);
-  let btn1 = $(`<a id="more-info"
+  let btn1 = $(`<a id="more-info" data-step="3"
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
   btn1.text("See More Info");
@@ -92,7 +98,7 @@ function fnStepTwo(st) {
 
   // jump to compare button
   let el4 = $(`<div class="col m9">`);
-  let btn2 = $(`<a id="compare"
+  let btn2 = $(`<a id="compare" data-step="4"
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
 	btn2.text("Compare");
@@ -101,12 +107,27 @@ function fnStepTwo(st) {
 }
 
 // 3
-function fnStepThree() {
+function fnStepThree(st) {
+	fnCommonRow(st);
+	fnCreateParallax(st);
+
+	let cardOrder = ["Weather","Phrases","Currency"]
+
+	let row1 = $(`<div class="row">`);
+	let row2 = $(`<div class="row">`);
+
+	// row 1 // cards
+	for(let i = 0; i <=2; i++) {
+		let card = $(`<div class="card">`)
+		let cardContent = $(`<div class="card-content">`)
+		if(i==0) let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`)
+		if(i==0) let cardTitle = $(`<p id="card${cardOrder[i]}">`)
+	}
 
 }
 
-// 4
-function fnStepFour() {}
+// 4 // reset
+function fnStepFour(st) {}
 
 // creates the first container and row common to each section, if they don't exist yet
 function fnCommonRow(s) {
