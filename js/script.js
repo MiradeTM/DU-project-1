@@ -12,13 +12,15 @@ $('#city-search').on('click', function(){
 	var cityAirportCode = airports.filter(function (forecast) {
 		return forecast.city.includes(city);
 		// define a variable for airport code
+
 		//set airport code.text
 		//modal to confirm radio group select airport and confirm shoot down to second section, add submit button. 
 		//modal please select city
+		
 	})
 
 console.log(cityAirportCode);
-console.log("Testing commits");
+
 
 
 
@@ -37,7 +39,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-	console.log(response);
+	// console.log(response);
 });
 
     
