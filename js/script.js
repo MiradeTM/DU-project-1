@@ -127,7 +127,9 @@ function fnStepThree(st) {
 }
 
 // 4 // reset
-function fnStepFour(st) {}
+function fnStepFour(st) {
+	
+}
 
 // creates the first container and row common to each section, if they don't exist yet
 function fnCommonRow(s) {
