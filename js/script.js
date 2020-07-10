@@ -21,7 +21,9 @@ $("#city-search").on("click", function () {
     //modal please select city
   });
 
+
   console.log(cityAirportCode);
+
 });
 
 var settings = {
@@ -37,6 +39,7 @@ var settings = {
 };
 
 $.ajax(settings).done(function (response) {
+
   console.log(response);
 });
 
