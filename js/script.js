@@ -6,15 +6,21 @@
 //button 6 = search-again
 
 $('#city-search').on('click', function(){
-//function search cities
+
+	var city = $("#outboundCity").val();
+
+	var cityAirportCode = airports.filter(function (forecast) {
+		return forecast.city.includes(city);
+		// define a variable for airport code
+		//set airport code.text
+		//modal to confirm radio group select airport and confirm shoot down to second section, add submit button. 
+		//modal please select city
+	})
+	
+console.log(cityAirportCode);
+});
 
 
-})
-function searchCities(){
-    //sift through object
-}
-
-//ajax call for Skyscanner
 var settings = {
 	"async": true,
 	"crossDomain": true,
@@ -29,3 +35,10 @@ var settings = {
 $.ajax(settings).done(function (response) {
 	console.log(response);
 });
+
+    
+
+
+//ajax call for Skyscanner
+
+
