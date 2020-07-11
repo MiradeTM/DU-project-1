@@ -133,9 +133,9 @@ function fnStepThree(st) {
 		let col = $(`<div class="col m4">`);
 		let card = $(`<div class="card">`)
 		let cardContent = $(`<div class="card-content">`)
-		let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`)
+		let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`) // ? DATA HOOK
 		cardTitle.text("Title")
-		let cardText = $(`<p id="card${cardOrder[i]}">`)
+		let cardText = $(`<p id="card${cardOrder[i]}">`) // ? DATA HOOK
 		cardText.text( "I am a card." )
 
 		cardContent.append(cardTitle,cardText)
