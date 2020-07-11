@@ -1,3 +1,7 @@
+// GLOBAL VARIABLES
+let current = {};
+let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+
 //button 1 = city-search
 //button 2 = more-info
 //button 3 = compare
@@ -145,13 +149,13 @@ function fnStepTwo(st) {
       // event delegation workaround
       fnStepFour(4);
 
-			// ! jquery move
-			$("html, body").animate(
-				{
-					scrollTop: $(`#step-4`).offset().top,
-				},
-				2000
-			);
+      // ! jquery move
+      $("html, body").animate(
+        {
+          scrollTop: $(`#step-4`).offset().top,
+        },
+        2000
+      );
     });
   }
 }
@@ -205,13 +209,13 @@ function fnStepThree(st) {
       // event delegation workaround
       fnStepFour(4);
 
-			// ! jquery move
-			$("html, body").animate(
-				{
-					scrollTop: $(`#step-4`).offset().top,
-				},
-				2000
-			);
+      // ! jquery move
+      $("html, body").animate(
+        {
+          scrollTop: $(`#step-4`).offset().top,
+        },
+        2000
+      );
     });
   }
 }
@@ -279,21 +283,37 @@ function fnStepFour(st) {
     el4.append(btn2);
     row2.append(el4);
     $("#search-again").on("click", function () {
-      
-
-			// ! jquery move
-			$("html, body").animate(
-				{
-					scrollTop: $(`#step-1`).offset().top,
-				},
-				2000
-			);
-			fnReset();
+      // ! jquery move
+      $("html, body").animate(
+        {
+          scrollTop: $(`#step-1`).offset().top,
+        },
+        2000
+      );
+      fnReset();
     });
 
     // add cards within parallax
-    let cardRow = $("#jump-4");
-    cardRow = cardRow[0].children[0].children[0];
+    let cardRow = $("#savedGallery");
+
+    // cards for previous entries
+    for (let i = 1; i <= saved.length; i++) {
+      let col = $(`<div class="col m4">`);
+      let card = $(`<div class="card">`);
+      let cardContent = $(`<div class="card-content">`);
+      let cardTitle = $(`<span class="card-title" id="savedTitle-${i}">`); // ? DATA HOOK
+      cardTitle.text("Title");
+      let cardText = $(`<p id="savedInfo-${i}">`); // ? DATA HOOK
+      cardText.text("I am a card.");
+
+      cardContent.append(cardTitle, cardText);
+      card.append(cardContent);
+      col.append(card);
+      cardRow.append(col);
+      btn2.text("Search Again");
+      el4.append(btn2);
+      row2.append(el4);
+    }
   }
 }
 
@@ -326,6 +346,7 @@ function fnCreateParallax(s) {
     let el2 = $(`<div class="section no-pad-bot" id='jump-${s}'>`);
     let el3 = $(`<div class="container">`);
     let el4 = $(`<div class="row center">`);
+    if (s == 4) el4.attr("id", "savedGallery");
     el1.append(el2);
     el2.append(el3);
     el3.append(el4);
