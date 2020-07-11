@@ -1,3 +1,7 @@
+// GLOBAL VARIABLES
+let current = {};
+let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {},];
+
 //button 1 = city-search
 //button 2 = more-info
 //button 3 = compare
@@ -6,11 +10,11 @@
 //button 6 = search-again
 
 $("#city-search").on("click", function () {
-	// ? CREATE/CHECK ELEMENTS FIRST
-		// If the elements already exist, remove them
-	// ? QUERY APIs
-	// ? POPULATE ELEMENTS VIA IDs & CLASSES
-	// ? MOVE PAGE VIA JQUERY
+  // ? CREATE/CHECK ELEMENTS FIRST
+  // If the elements already exist, remove them
+  // ? QUERY APIs
+  // ? POPULATE ELEMENTS VIA IDs & CLASSES
+  // ? MOVE PAGE VIA JQUERY
   var city = $("#outboundCity").val();
 
   var cityAirportCode = airports.filter(function (forecast) {
@@ -21,9 +25,7 @@ $("#city-search").on("click", function () {
     //modal please select city
   });
 
-
   console.log(cityAirportCode);
-
 });
 
 var settings = {
@@ -39,11 +41,11 @@ var settings = {
 };
 
 $.ajax(settings).done(function (response) {
-
   console.log(response);
 });
 
-fnStepTwo(2)
+
+fnStepTwo(2);
 fnStepThree(3);
 fnStepFour(4);
 
@@ -51,9 +53,8 @@ fnStepFour(4);
 
 // action functions
 function fnSave() {
-	// add primary destination to local obj array
+  // add primary destination to local obj array
 }
-
 
 // step functions
 function fnStepOne() {
@@ -76,19 +77,21 @@ function fnStepTwo(st) {
   let el1 = $(`<div class="col m3">`);
   let imageArea = $(
     `<img class="primary-destination-img" id="prime-img" src="">`
-	); 
-	el1.append(imageArea);
-	// ? DATA HOOKS
-	// ! data query should send to class
+  );
+  el1.append(imageArea);
+  // ? DATA HOOKS
+  // ! data query should send to class
   row1.append(el1);
 
   // flight info
   let el2 = $(`<div class="col m9">`);
   let elHead = $(`<h2 class="primary-destination-head" id="prime-head">`);
-	let elInfo = $(`<p class="primary-destination-info" id="prime-info">`);
-	elInfo.text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-	// ? DATA HOOKS
-	// ! data query should send to class
+  let elInfo = $(`<p class="primary-destination-info" id="prime-info">`);
+  elInfo.text(
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  );
+  // ? DATA HOOKS
+  // ! data query should send to class
   el2.append(elHead);
   el2.append(elInfo);
   row1.append(el2);
@@ -108,57 +111,57 @@ function fnStepTwo(st) {
   let btn2 = $(`<a id="compare" data-step="4"
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
-	btn2.text("Compare");
-	el4.append(btn2)
-	row2.append(el4)
+  btn2.text("Compare");
+  el4.append(btn2);
+  row2.append(el4);
 }
 
 // 3
 function fnStepThree(st) {
-	fnCommonRow(st);
-	fnCreateParallax(st);
+  fnCommonRow(st);
+  fnCreateParallax(st);
 
-	let cardOrder = ["Weather","Phrases","Currency"]
+  let cardOrder = ["Weather", "Phrases", "Currency"];
 
-	let row1 = $(`<div class="row">`);
-	let row2 = $(`<div class="row">`);
+  let row1 = $(`<div class="row">`);
+  let row2 = $(`<div class="row">`);
 
-	// attach to #step-${st}
-	console.log($(`#step-${st}`))
-	$(`#step-${st}`).append(row1);
+  // attach to #step-${st}
+  console.log($(`#step-${st}`));
+  $(`#step-${st}`).append(row1);
   $(`#step-${st}`).append(row2);
 
-	// row 1 // cards
-	for(let i = 0; i <=2; i++) {
-		let col = $(`<div class="col m4">`);
-		let card = $(`<div class="card">`)
-		let cardContent = $(`<div class="card-content">`)
-		let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`) // ? DATA HOOK
-		cardTitle.text("Title")
-		let cardText = $(`<p id="card${cardOrder[i]}">`) // ? DATA HOOK
-		cardText.text( "I am a card." )
+  // row 1 // cards
+  for (let i = 0; i <= 2; i++) {
+    let col = $(`<div class="col m4">`);
+    let card = $(`<div class="card">`);
+    let cardContent = $(`<div class="card-content">`);
+    let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`); // ? DATA HOOK
+    cardTitle.text("Title");
+    let cardText = $(`<p id="card${cardOrder[i]}">`); // ? DATA HOOK
+    cardText.text("I am a card.");
 
-		cardContent.append(cardTitle,cardText)
-		card.append(cardContent)
-		col.append(card)
-		row1.append(col)
-	}
+    cardContent.append(cardTitle, cardText);
+    card.append(cardContent);
+    col.append(card);
+    row1.append(col);
+  }
 
-	//row 2 // button
-	let ltCol = $(`<div class="col m5">`); 
-	let rtCol = $(`<div class="col m5">`);
-	let ctCol = $(`<div class="col m2">`);
+  //row 2 // button
+  let ltCol = $(`<div class="col m5">`);
+  let rtCol = $(`<div class="col m5">`);
+  let ctCol = $(`<div class="col m2">`);
   let btn = $(`<a id="compare" data-step="4"
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
-	btn.text("Compare");
-	ctCol.append(btn)
-	row2.append(ltCol,ctCol,rtCol)
+  btn.text("Compare");
+  ctCol.append(btn);
+  row2.append(ltCol, ctCol, rtCol);
 }
 
-// 4 
+// 4
 function fnStepFour(st) {
-	fnCommonRow(st);
+  fnCommonRow(st);
   fnCreateParallax(st);
 
   let row1 = $(`<div class="row">`);
@@ -172,19 +175,21 @@ function fnStepFour(st) {
   let el1 = $(`<div class="col m3">`);
   let imageArea = $(
     `<img class="primary-destination-img" id="prime-img" src="">`
-	); 
-	el1.append(imageArea);
-	// ? DATA HOOKS
-	// ! data query should send to class
+  );
+  el1.append(imageArea);
+  // ? DATA HOOKS
+  // ! data query should send to class
   row1.append(el1);
 
   // flight info
   let el2 = $(`<div class="col m9">`);
   let elHead = $(`<h2 class="primary-destination-head" id="prime-head">`);
-	let elInfo = $(`<p class="primary-destination-info" id="prime-info">`);
-	elInfo.text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-	// ? DATA HOOKS
-	// ! data query should send to class
+  let elInfo = $(`<p class="primary-destination-info" id="prime-info">`);
+  elInfo.text(
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  );
+  // ? DATA HOOKS
+  // ! data query should send to class
   el2.append(elHead);
   el2.append(elInfo);
   row1.append(el2);
@@ -204,13 +209,29 @@ function fnStepFour(st) {
   let btn2 = $(`<a id="search-again" data-step="4"
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
-	btn2.text("Search Again");
-	el4.append(btn2)
-	row2.append(el4)
-	
-	// add cards within parallax
-	let cardRow = $("#jump-4")
-	cardRow = cardRow[0].children[0].children[0]
+  btn2.text("Search Again");
+  el4.append(btn2);
+  row2.append(el4);
+
+  // add cards within parallax
+	let cardRow = $("#savedGallery");
+
+  // cards for previous entries
+  for (let i = 1; i <= saved.length; i++) {
+		let col = $(`<div class="col m4">`);
+    let card = $(`<div class="card">`);
+    let cardContent = $(`<div class="card-content">`);
+    let cardTitle = $(`<span class="card-title" id="savedTitle-${i}">`); // ? DATA HOOK
+    cardTitle.text("Title");
+    let cardText = $(`<p id="savedInfo-${i}">`); // ? DATA HOOK
+    cardText.text("I am a card.");
+
+    cardContent.append(cardTitle, cardText);
+    card.append(cardContent);
+    col.append(card);
+    cardRow.append(col);
+		
+  }
 }
 
 // creates the first container and row common to each section, if they don't exist yet
@@ -241,7 +262,8 @@ function fnCreateParallax(s) {
     let el1 = $(`<div class="parallax-container align-wrapper">`);
     let el2 = $(`<div class="section no-pad-bot" id='jump-${s}'>`);
     let el3 = $(`<div class="container">`);
-    let el4 = $(`<div class="row center">`);
+		let el4 = $(`<div class="row center">`);
+		if(s==4) el4.attr("id","savedGallery")
     el1.append(el2);
     el2.append(el3);
     el3.append(el4);
