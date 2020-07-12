@@ -114,6 +114,8 @@ function fnTranslate(action) {
   }
 
   console.log();
+
+  // ! this needs to go in data response somehow
   // send phrase and translation to card
   // 'Phrases-title'
   $("#Phrases-title").text(`Phrases in ${translation.targetName}`);
@@ -121,8 +123,8 @@ function fnTranslate(action) {
   for (let i = 0; i <= 2; i++) {
     let listTable = $("#Phrases-text")
     let listRow = $("<tr>")
-    let listItem1 = $("<td>").text(translation.phrases[i]);
-    let listItem2 = $("<td>").text(translation.target[i]);
+    let listItem1 = $(`<td id='phrase-${i}'>`).text(translation.phrases[i]);
+    let listItem2 = $(`<td id='phrase-${i}'>`).text(translation.target[i]);
     
     listRow.append(listItem1)
     listRow.append(listItem2)
