@@ -119,7 +119,6 @@ function fnTranslate(action) {
   $("#Phrases-title").text(`Phrases in ${translation.targetName}`);
   // 'Phrases-text'
   for (let i = 0; i <= 2; i++) {
-    console.log(translation.target)
     let listTable = $("#Phrases-text")
     let listRow = $("<tr>")
     let listItem1 = $("<td>").text(translation.phrases[i]);
