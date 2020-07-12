@@ -254,9 +254,10 @@ function fnCreateParallax(s) {
     $("#main-content").append(el1);
   }
 }
+/* added functionality for weather data from inbound input, wasn't sure where to put it since I fell a little behind. Set as on click to test. All set for me to just plug in where to append. */
 
-
-$('#city-search').on('click', function(){
+// $('#city-search').on('click', 
+function weatherData(){
   var weatherCity= $('#inboundCity').val().trim()
   var weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${weatherCity}&appid=4269dfac7a15a389ebd794d9f326120d`
   $.ajax({
@@ -289,5 +290,5 @@ $('#city-search').on('click', function(){
       dailyDisplay.append(dateDisplay, iconEl, weatherEl, tempEl, windEl)
     }
   })
-})
+}
 // weatherData()
