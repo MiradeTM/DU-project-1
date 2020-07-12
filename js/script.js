@@ -1,6 +1,20 @@
 // GLOBAL VARIABLES
 let current = {};
 let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+let phrases = [
+  "Hello",
+  "Do you speak English?",
+  "Please",
+  "Thank You",
+  "Excuse me.",
+  "Where is the bathroom?",
+  "Cheers!",
+  "I’m sorry",
+  "How much does it cost?",
+  "What’s your name?",
+  "Sorry, I Don’t Understand",
+  "Goodbye",
+];
 
 //button 1 = city-search
 //button 2 = more-info
@@ -62,7 +76,20 @@ function fnSave() {
 
 function fnReset() {}
 
-function fnTranslate(data) {
+function fnTranslate() {
+  let googleKey = "AIzaSyBvAzIcdH6h1MADdn0MMEdWsMgB0HyR0Sg";
+  
+  phrases.forEach(function(phrase,i) {
+    
+  })
+
+  // translate request // working
+  // $.ajax({
+  //   url: `https://translation.googleapis.com/language/translate/v2?target=es&key=${googleKey}&q=${text}`,
+  //   method: "GET",
+  // }).then(function (res) {
+  //   console.log(res);
+  // });
   // get data
   // origin lang -> new lang
   // edit data for formatting
