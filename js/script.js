@@ -11,26 +11,26 @@ $("#city-search").on("click", function () {
 	// ? QUERY APIs
 	// ? POPULATE ELEMENTS VIA IDs & CLASSES
 	// ? MOVE PAGE VIA JQUERY
-  var city = $("#outboundCity").val();
+  var city = $("#outboundCity").val().trim();
 
   var cityAirportCode = airports.filter(function (forecast) {
     return forecast.city.includes(city);
     // define a variable for airport code
-    //set airport code.text
-    //modal to confirm radio group select airport and confirm shoot down to second section, add submit button.
-    //modal please select city
-  });
+    // set airport code.text
+    // modal to confirm radio group select airport and confirm shoot down to second section, add submit button.
+    // modal please select city
+  
 
 
   console.log(cityAirportCode);
 
 });
-
+});
 var settings = {
   async: true,
   crossDomain: true,
   url:
-    "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/DEN/Aba/2020-08-13" /* `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${outbound-city}/${inbound-city}/2020-09-01`,*/,
+    "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/DEN/las/2020-08-13" /* `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${outbound-city}/${inbound-city}/2020-09-01`,*/,
   method: "GET",
   headers: {
     "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
@@ -39,7 +39,7 @@ var settings = {
 };
 
 $.ajax(settings).done(function (response) {
-
+//  var inboundcode
   console.log(response);
 });
 
@@ -254,3 +254,40 @@ function fnCreateParallax(s) {
     $("#main-content").append(el1);
   }
 }
+
+
+$('#city-search').on('click', function(){
+  var weatherCity= $('#inboundCity').val().trim()
+  var weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${weatherCity}&appid=4269dfac7a15a389ebd794d9f326120d`
+  $.ajax({
+    url: weatherUrl,
+    method: 'get'
+  }).then(function(weath){
+    console.log(weath)
+    var weatherView = $('<div>').attr('class', 'container')
+    var weatherInfo = $('<div>').attr('class', 'row')
+    // ??? append to body or section.(weatherView)
+    weatherView.append(weatherInfo)
+    for(i=0; i<40;i+=8){
+      var city =weath.city.name
+      var highTemp =weath.list[i].main.temp_max
+      var weatherIcon =weath.list[i].weather[0].icon 
+      var weather = weath.list[i].weather[0].description
+      var wind = weath.list[i].wind.speed
+      var date = moment(weath.list[i].dt_txt).format("LL")
+      weatherInfo.text(city)
+      var dailyDisplay = $('<div>').attr('class', 'col')
+      weatherInfo.append(dailyDisplay)
+      var dateDisplay= $('<h5>').text(`Weather for: ${date}`)
+      var iconEl = $('<img>').attr({
+        'src': 'https://openweathermap.org/img/wn/' + weatherIcon + '.png',
+        'alt': 'weather icon'
+      })
+      var weatherEl = $('<p>').text(`Forecast shows: ${weather}`)
+      var tempEl = $('<p>').text(`High Temp: ${highTemp} F`)
+      var windEl = $('<p>').text(`Wind: ${wind} mph`)
+      dailyDisplay.append(dateDisplay, iconEl, weatherEl, tempEl, windEl)
+    }
+  })
+})
+// weatherData()
