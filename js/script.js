@@ -179,7 +179,11 @@ function fnSave() {
   // add primary destination to local obj array
 }
 
-function fnReset() {}
+function fnReset() {
+$('#2').remove();
+$('#3').remove();
+$('#4').remove();  
+}
 
 function fnTranslate(action) {
   // get data
