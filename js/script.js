@@ -118,6 +118,7 @@ $("#city-search").on("click", function () {
     }
   }
 
+
   if (multicountries) {
 
     alert("Too many");
@@ -139,7 +140,7 @@ $("#city-search").on("click", function () {
 
   }
 
-  
+  console.log(cityAirportCode);
 
 });
 
@@ -149,7 +150,7 @@ fnStepTwo(2)
 fnStepThree(3);
 fnStepFour(4);
 
-  console.log(cityAirportCode);
+  
 
 
 var settings = {
