@@ -10,15 +10,21 @@ let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
 //button 6 = search-again
 var departCode;
 var departureList = [];
-
+var map ;
 
 
 
 let currentTrip = {
   lang: "",
   currency: "",
+  cityName: "",
+  countryName: "",
+  lat: "",
+  lon: ""
 };
 let savedTrips = [];
+
+
 
 let translation = {
   phrases: [
@@ -49,10 +55,15 @@ $("#city-search").on("click", function () {
   // ? POPULATE ELEMENTS VIA IDs & CLASSES
   // ? MOVE PAGE VIA JQUERY
   var city = $("#outboundCity").val();
-  var arrivalCity = $("#inboundCity").val();
+  currentTrip.cityName = $("#inboundCity").val();
+
+  
+
+ 
+
   var testing = airports.filter(function(something){
     //filters out info for arrival city
-    return something.city.includes(arrivalCity);
+    return something.city.includes(currentTrip.cityName);
   })
   console.log("click");
   fnStepTwo(2);
@@ -62,7 +73,7 @@ $("#city-search").on("click", function () {
   fnMove(2);
 
   var cityAirportCode = airports.filter(function (forecast) {
-    return forecast.city.includes(city);
+    return forecast.city.includes(currentTrip.cityName);
     // define a variable for airport code
     //set airport code.text
     //modal to confirm radio group select airport and confirm shoot down to second section, add submit button.
@@ -70,7 +81,18 @@ $("#city-search").on("click", function () {
   })
   console.log(testing);
   departCode = cityAirportCode[0].code;
-  console.log(cityAirportCode);
+  currentTrip.countryName = cityAirportCode[0].country;
+  currentTrip.lat = cityAirportCode[0].lat;
+  currentTrip.lon = cityAirportCode[0].lon;
+
+  var map = `https://maps.googleapis.com/maps/api/staticmap?center=${currentTrip.cityName}, ${currentTrip.countryName}&zoom=10&size=400x400&key=AIzaSyBlAblD7C-CUKPsTmGf4Z4L-Dw3uhksPXU`
+
+
+
+  
+
+  console.log(cityAirportCode[0].country);
+  console.log(currentTrip);
 
   var settings = {
     async: true,
@@ -87,6 +109,8 @@ $("#city-search").on("click", function () {
   $.ajax(settings).done(function (response) {
   
     console.log(response);
+
+
   });
 
   
@@ -106,7 +130,7 @@ $("#city-search").on("click", function () {
       });
 
       // create selection box dynamically dont use alert
-      alert("Please specify which Airport" + departureList );
+      alert("Please specify which country" + departureList );
       console.log(departureList);
       multiCountries = true;
       return false;
@@ -136,6 +160,8 @@ $("#city-search").on("click", function () {
   }
 
   console.log(cityAirportCode);
+
+  $("#prime-img").attr("src", map);
 
 });
 
@@ -252,7 +278,8 @@ function fnStepTwo(st) {
 
     // row 1 // image & flight info
     // image
-    let el1 = $(`<div class="col m3">`);
+    let el1 = $(`<div class="col m6">`);
+   
     let imageArea = $(
       `<img class="primary-destination-img" id="prime-img" src="">`
     );
@@ -262,7 +289,7 @@ function fnStepTwo(st) {
     row1.append(el1);
 
     // flight info
-    let el2 = $(`<div class="col m9">`);
+    let el2 = $(`<div class="col m6 text-center">`);
     let elHead = $(`<h2 class="primary-destination-head" id="prime-head">`);
     let elInfo = $(`<p class="primary-destination-info" id="prime-info">`);
     elInfo.text(
@@ -452,17 +479,27 @@ function fnStepFour(st) {
     let cardRow = $("#savedGallery");
 
     // cards for previous entries
-    for (let i = 0; i <= savedTrips.length; i++) {
+    for (let i = 0; i <= savedTrips.length-1; i++) {
       let col = $(`<div class="col m4">`);
       let card = $(`<div class="card">`);
-      let cardContent = $(`<div class="card-content">`);
-      let cardTitle = $(`<span class="card-title" id="savedTitle-${i}">`); // ? DATA HOOK
-      cardTitle.text("Title");
-      let cardText = $(`<p id="savedInfo-${i}">`); // ? DATA HOOK
-      cardText.text("I am a card.");
 
-      cardContent.append(cardTitle, cardText);
-      card.append(cardContent);
+      let cardContent = $(`<div class="card-image">`);
+      let cardImage = $(`<img src="https://maps.googleapis.com/maps/api/staticmap?center=${savedTrips[i]}&zoom=10&size=200x300&key=AIzaSyBlAblD7C-CUKPsTmGf4Z4L-Dw3uhksPXU">`);
+      // $(cardImage).attr("src", `https://maps.googleapis.com/maps/api/staticmap?center=${savedTrips[i]}&zoom=10&size=200x200&key=AIzaSyBlAblD7C-CUKPsTmGf4Z4L-Dw3uhksPXU` );
+
+      let cardTitle = $(`<span class="card-action" id="savedTitle-${i}">`); // ? DATA HOOK
+      cardTitle.text(`${savedTrips[i]}`);
+      let cardText = $(`<p id="savedInfo-${i}">`); // ? DATA HOOK
+      cardText.text(savedTrips[i].cityName);
+
+      // <div class="card-image">
+      //     <img src="images/sample-1.jpg">
+      //      <span class="card-title">Card Title</span>
+      //   </div>
+
+      
+      cardContent.append(cardImage);
+      card.append(cardImage, cardText);
       col.append(card);
       cardRow.append(col);
       btn2.text("Search Again");
