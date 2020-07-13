@@ -1,5 +1,4 @@
 // GLOBAL VARIABLES
-
 let current = {};
 let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
 
@@ -97,7 +96,7 @@ $("#city-search").on("click", function () {
   // checks if there is more than one airport for that location
   //wanted to start i @ 0 but causes issue if only one airport
   for (var i = 0; i < cityAirportCode.length; i++) {
-    if (cityAirportCode[i+1].country !== cityAirportCode[i].country) {
+    if (cityAirportCode[i].country !== cityAirportCode[i].country) {
       //need to make modal list of first 5 countries to choose from
       console.log(cityAirportCode[i].country);
       departureList.push(cityAirportCode[0].country,cityAirportCode[1].country);
@@ -113,6 +112,7 @@ $("#city-search").on("click", function () {
       return false;
     }
   }
+
 
   if (multicountries) {
 
@@ -135,7 +135,7 @@ $("#city-search").on("click", function () {
 
   }
 
-  
+  console.log(cityAirportCode);
 
 });
 
@@ -145,7 +145,7 @@ fnStepTwo(2)
 fnStepThree(3);
 fnStepFour(4);
 
-  console.log(cityAirportCode);
+  
 
 
 var settings = {
@@ -163,8 +163,6 @@ var settings = {
 $.ajax(settings).done(function (response) {
   console.log(response);
 });
-
-// fnTranslate("generate")
 
 //ajax call for Skyscanner
 
