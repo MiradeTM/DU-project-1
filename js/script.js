@@ -139,15 +139,6 @@ $("#city-search").on("click", function () {
 
 });
 
-
-
-fnStepTwo(2)
-fnStepThree(3);
-fnStepFour(4);
-
-  
-
-
 var settings = {
   async: true,
   crossDomain: true,
