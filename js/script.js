@@ -1,4 +1,20 @@
 // GLOBAL VARIABLES
+
+let current = {};
+let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+
+//button 1 = city-search
+//button 2 = more-info
+//button 3 = compare
+//button 4 = compare2
+//button 5 = save-item
+//button 6 = search-again
+var departCode;
+var departureList = [];
+
+
+
+
 let currentTrip = {
   lang: "",
   currency: "",
@@ -24,12 +40,21 @@ let translation = {
   targetName: "",
 };
 
+
 $("#city-search").on("click", function () {
+  var multilist = false;
+  var multicountries = false;
   // ? CREATE/CHECK ELEMENTS FIRST
   // If the elements already exist, remove them
   // ? QUERY APIs
   // ? POPULATE ELEMENTS VIA IDs & CLASSES
   // ? MOVE PAGE VIA JQUERY
+  var city = $("#outboundCity").val();
+  var arrivalCity = $("#inboundCity").val();
+  var testing = airports.filter(function(something){
+    //filters out info for arrival city
+    return something.city.includes(arrivalCity);
+  })
   console.log("click");
   fnStepTwo(2);
   var city = $("#outboundCity").val();
@@ -47,10 +72,85 @@ $("#city-search").on("click", function () {
     //set airport code.text
     //modal to confirm radio group select airport and confirm shoot down to second section, add submit button.
     //modal please select city
+  })
+  console.log(testing);
+  departCode = cityAirportCode[0].code;
+  console.log(cityAirportCode);
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url:
+      "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/DEN/Aba/2020-08-13",
+      // `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/ELS/DIA/2020-07-13`
+    method: "GET",
+    headers: {
+      "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+      "x-rapidapi-key": "7c47b2fe8fmsh63683bae1988c2fp1fbb32jsn3a82c96b46b9",
+    },
+  };
+  $.ajax(settings).done(function (response) {
+  
+    console.log(response);
   });
 
-  console.log(cityAirportCode);
+  
+  
+
+
+  // checks if there is more than one airport for that location
+  //wanted to start i @ 0 but causes issue if only one airport
+  for (var i = 0; i < cityAirportCode.length; i++) {
+    if (cityAirportCode[i+1].country !== cityAirportCode[i].country) {
+      //need to make modal list of first 5 countries to choose from
+      console.log(cityAirportCode[i].country);
+      departureList.push(cityAirportCode[0].country,cityAirportCode[1].country);
+
+      var selection = departureList.forEach(function(selection) {
+        console.log(selection);
+      });
+
+      // create selection box dynamically dont use alert
+      alert("Please specify which Airport" + departureList );
+      console.log(departureList);
+      multiCountries = true;
+      return false;
+    }
+  }
+
+  if (multicountries) {
+
+    alert("Too many");
+    country = "user selected country goes here";
+    cityAirportCode.filter(function(airport) {
+      return airport.country === country;
+    });
+
+  }
+
+  if (cityAirportCode.length > 1){
+    multilist = true;
+  }
+
+  if (multilist) {
+    //logic of generating select menu of airport options
+  } else {
+    //else just use cityAirportCode[0].code
+
+  }
+
+  
+
 });
+
+
+
+fnStepTwo(2)
+fnStepThree(3);
+fnStepFour(4);
+
+  console.log(cityAirportCode);
+
 
 var settings = {
   async: true,
@@ -71,6 +171,8 @@ $.ajax(settings).done(function (response) {
 // fnTranslate("generate")
 
 //ajax call for Skyscanner
+
+
 
 // action functions
 function fnSave() {
