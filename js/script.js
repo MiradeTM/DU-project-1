@@ -414,6 +414,7 @@ function fnCreateParallax(s) {
 
     el1.append(el2);
     $("#main-content").append(el1);
+    $('.parallax').parallax();
   }
 }
 
