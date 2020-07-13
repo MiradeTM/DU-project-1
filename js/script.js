@@ -145,11 +145,6 @@ $("#city-search").on("click", function () {
 
 
 
-fnStepTwo(2)
-fnStepThree(3);
-fnStepFour(4);
-
-  console.log(cityAirportCode);
 
 
 var settings = {
@@ -180,6 +175,8 @@ function fnSave() {
 }
 
 function fnReset() {
+$('.parallax-container').remove();
+// $('#jump-4').remove();
 $('#2').remove();
 $('#3').remove();
 $('#4').remove();  
@@ -371,9 +368,9 @@ function fnStepThree(st) {
     }
     
     //row 2 // button
-    let ltCol = $(`<div class="col m5">`);
-    let rtCol = $(`<div class="col m5">`);
-    let ctCol = $(`<div class="col m2">`);
+    let ltCol = $(`<div class="col m5 s4">`);
+    let rtCol = $(`<div class="col m5 s4">`);
+    let ctCol = $(`<div class="col m2 s4">`);
     let btn = $(`<a id="compare2" data-step="4"
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
@@ -473,7 +470,7 @@ function fnStepFour(st) {
 
     // cards for previous entries
     for (let i = 1; i <= saved.length; i++) {
-      let col = $(`<div class="col m4">`);
+      let col = $(`<div class="col m4 s4">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
       let cardTitle = $(`<span class="card-title" id="savedTitle-${i}">`); // ? DATA HOOK
