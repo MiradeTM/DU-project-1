@@ -77,7 +77,10 @@ function fnSave() {
   // add primary destination to local obj array
 }
 
-function fnReset() {}
+function fnReset() {
+  
+}
+
 
 function fnTranslate(action) {
   // get data
@@ -106,14 +109,11 @@ function fnTranslate(action) {
         url: `https://translation.googleapis.com/language/translate/v2?target=${targetLang}&key=${googleKey}&q=${phrase}`,
         method: "GET",
       }).then(function (res) {
-        // console.log(res.data.translations[0]);
+        // current language translation
         translation.target[i] = res.data.translations[0].translatedText;
       });
     });
-    
   }
-
-  console.log();
 
   // ! this needs to go in data response somehow
   // send phrase and translation to card
@@ -124,6 +124,7 @@ function fnTranslate(action) {
     let listTable = $("#Phrases-text")
     let listRow = $("<tr>")
     let listItem1 = $(`<td id='phrase-${i}'>`).text(translation.phrases[i]);
+    // ! change id
     let listItem2 = $(`<td id='phrase-${i}'>`).text(translation.target[i]);
     
     listRow.append(listItem1)
@@ -366,7 +367,7 @@ function fnStepFour(st) {
     let cardRow = $("#savedGallery");
 
     // cards for previous entries
-    for (let i = 1; i <= saved.length; i++) {
+    for (let i = 0; i <= savedTrips.length; i++) {
       let col = $(`<div class="col m4">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
