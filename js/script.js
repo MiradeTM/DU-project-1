@@ -59,12 +59,8 @@ $("#city-search").on("click", function () {
   fnStepTwo(2);
   var city = $("#outboundCity").val();
 
-  $("html, body").animate(
-    {
-      scrollTop: $(`#step-2`).offset().top,
-    },
-    2000
-  );
+  // jQuery move
+  fnMove(2);
 
   var cityAirportCode = airports.filter(function (forecast) {
     return forecast.city.includes(city);
@@ -183,14 +179,6 @@ function fnSave() {
 function fnReset() {}
 
 function fnTranslate(action) {
-  // get data
-  // new lang from object: translation
-  // edit data for formatting
-  // ajax request
-  // parse response
-  // send data to data hooks
-  let googleKey = "AIzaSyBvAzIcdH6h1MADdn0MMEdWsMgB0HyR0Sg";
-
   // shuffle phrases
   for (let i = translation.phrases.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * i);
@@ -200,38 +188,49 @@ function fnTranslate(action) {
   }
 
   if (action === "generate") {
+    let googleKey = "AIzaSyBvAzIcdH6h1MADdn0MMEdWsMgB0HyR0Sg";
+    $("#Phrases-title").text(`Phrases in ${translation.targetName}`);
     let targetLang = currentTrip.lang;
-    targetLang = "es";
+    targetLang = "";
     translation.phrases.forEach(function (phrase, i) {
       // translate request // working
-
       $.ajax({
         url: `https://translation.googleapis.com/language/translate/v2?target=${targetLang}&key=${googleKey}&q=${phrase}`,
         method: "GET",
       }).then(function (res) {
-        // console.log(res.data.translations[0]);
+        // current language translation
         translation.target[i] = res.data.translations[0].translatedText;
+
+        // add list to existing cards
+        if (i <= 2) {
+          let listTable = $("#Phrases-text");
+          let listRow = $("<tr>");
+          let listItem1 = $(`<td id='phrase-${i}'>`).text(
+            translation.phrases[i]
+          );
+          let listItem2 = $(`<td id='phraseTarget-${i}'>`).text(
+            translation.target[i]
+          );
+          listRow.append(listItem1);
+          listRow.append(listItem2);
+          listTable.append(listRow);
+        }
       });
     });
-    
-  }
+  } else if (action === "shuffle") {
+    $("#Phrases");
+    // shuffle phrases
+    for (let i = translation.phrases.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * i);
+      const temp = translation.phrases[i];
+      translation.phrases[i] = translation.phrases[j];
+      translation.phrases[j] = temp;
+    }
 
-  console.log();
-
-  // ! this needs to go in data response somehow
-  // send phrase and translation to card
-  // 'Phrases-title'
-  $("#Phrases-title").text(`Phrases in ${translation.targetName}`);
-  // 'Phrases-text'
-  for (let i = 0; i <= 2; i++) {
-    let listTable = $("#Phrases-text")
-    let listRow = $("<tr>")
-    let listItem1 = $(`<td id='phrase-${i}'>`).text(translation.phrases[i]);
-    let listItem2 = $(`<td id='phrase-${i}'>`).text(translation.target[i]);
-    
-    listRow.append(listItem1)
-    listRow.append(listItem2)
-    listTable.append(listRow)
+    for (let i = 0; i <= 2; i++) {
+      $(`<td id='phrase-${i}'>`).text(translation.phrases[i]);
+      $(`<td id='phraseTarget-${i}'>`).text(translation.target[i]);
+    }
   }
 }
 
@@ -244,7 +243,6 @@ function fnStepOne() {
 function fnStepTwo(st) {
   if ($(`#step-${st}`).length) {
     // already exists
-    // console.log("it exists");
   } else {
     fnCommonRow(st);
     fnCreateParallax(st);
@@ -293,15 +291,10 @@ function fnStepTwo(st) {
 
       // data actions
       // translate
-      fnTranslate('generate');
+      fnTranslate("generate");
 
-      // jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-3`).offset().top,
-        },
-        2000
-      );
+      // jQuery move
+      fnMove(3);
     });
 
     // jump to compare button
@@ -316,13 +309,8 @@ function fnStepTwo(st) {
       // event delegation workaround
       fnStepFour(4);
 
-      // jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-4`).offset().top,
-        },
-        2000
-      );
+      // jQuery move
+      fnMove(4);
     });
   }
 }
@@ -351,9 +339,12 @@ function fnStepThree(st) {
       let col = $(`<div class="col m4">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
-      let cardText
+      let cardText;
+      let cardAction;
       if (i == 1) {
-        cardText = $(`<table id="${cardOrder[i]}-text" class='highlight'>`)
+        cardText = $(`<table id="${cardOrder[i]}-text" class='highlight'>`);
+        cardAction = $("<div class='card-action'>")
+        cardAction.append($(`<a id='#shuffle'>`).text('Shuffle Phrases'))
       } else {
         cardText = $(`<p id="${cardOrder[i]}-text">`);
         cardText.text("I am a card.");
@@ -362,11 +353,16 @@ function fnStepThree(st) {
       cardTitle.text("Title");
 
       cardContent.append(cardTitle, cardText);
+      // add shuffle button
+      if(i==1) {
+        cardContent.append(cardAction)
+        $('#shuffle').on('click', fnTranslate('shuffle'))
+      }
       card.append(cardContent);
       col.append(card);
       row1.append(col);
     }
-    
+
     //row 2 // button
     let ltCol = $(`<div class="col m5">`);
     let rtCol = $(`<div class="col m5">`);
@@ -381,13 +377,8 @@ function fnStepThree(st) {
       // event delegation workaround
       fnStepFour(4);
 
-      // jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-4`).offset().top,
-        },
-        2000
-      );
+      // jQuery move
+      fnMove(4);
     });
   }
 }
@@ -455,13 +446,8 @@ function fnStepFour(st) {
     el4.append(btn2);
     row2.append(el4);
     $("#search-again").on("click", function () {
-      // jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-1`).offset().top,
-        },
-        2000
-      );
+      // jQuery move
+      fnMove(1);
       fnReset();
     });
 
@@ -469,7 +455,7 @@ function fnStepFour(st) {
     let cardRow = $("#savedGallery");
 
     // cards for previous entries
-    for (let i = 1; i <= saved.length; i++) {
+    for (let i = 0; i <= savedTrips.length; i++) {
       let col = $(`<div class="col m4">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
@@ -532,4 +518,14 @@ function fnCreateParallax(s) {
     el1.append(el2);
     $("#main-content").append(el1);
   }
+}
+
+function fnMove(s) {
+  // jquery move
+  $("html, body").animate(
+    {
+      scrollTop: $(`#step-${s}`).offset().top,
+    },
+    2000
+  );
 }
