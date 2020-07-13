@@ -1,8 +1,5 @@
 // GLOBAL VARIABLES
 
-let current = {};
-let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
-
 //button 1 = city-search
 //button 2 = more-info
 //button 3 = compare
@@ -14,10 +11,11 @@ var departureList = [];
 
 
 
-
+//global object currentTrip 
 let currentTrip = {
   lang: "",
   currency: "",
+  countryName: "belgium"
 };
 let savedTrips = [];
 
@@ -51,7 +49,7 @@ $("#city-search").on("click", function () {
   // ? MOVE PAGE VIA JQUERY
   var city = $("#outboundCity").val();
   var arrivalCity = $("#inboundCity").val();
-  var testing = airports.filter(function(something){
+  var testing = airports.filter(function (something) {
     //filters out info for arrival city
     return something.city.includes(arrivalCity);
   })
@@ -78,7 +76,7 @@ $("#city-search").on("click", function () {
     crossDomain: true,
     url:
       "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/DEN/Aba/2020-08-13",
-      // `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/ELS/DIA/2020-07-13`
+    // `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/ELS/DIA/2020-07-13`
     method: "GET",
     headers: {
       "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
@@ -86,28 +84,24 @@ $("#city-search").on("click", function () {
     },
   };
   $.ajax(settings).done(function (response) {
-  
+
     console.log(response);
   });
-
-  
-  
-
 
   // checks if there is more than one airport for that location
   //wanted to start i @ 0 but causes issue if only one airport
   for (var i = 0; i < cityAirportCode.length; i++) {
-    if (cityAirportCode[i+1].country !== cityAirportCode[i].country) {
+    if (cityAirportCode[i + 1].country !== cityAirportCode[i].country) {
       //need to make modal list of first 5 countries to choose from
       console.log(cityAirportCode[i].country);
-      departureList.push(cityAirportCode[0].country,cityAirportCode[1].country);
+      departureList.push(cityAirportCode[0].country, cityAirportCode[1].country);
 
-      var selection = departureList.forEach(function(selection) {
+      var selection = departureList.forEach(function (selection) {
         console.log(selection);
       });
 
       // create selection box dynamically dont use alert
-      alert("Please specify which Airport" + departureList );
+      alert("Please specify which Airport" + departureList);
       console.log(departureList);
       multiCountries = true;
       return false;
@@ -118,13 +112,13 @@ $("#city-search").on("click", function () {
 
     alert("Too many");
     country = "user selected country goes here";
-    cityAirportCode.filter(function(airport) {
+    cityAirportCode.filter(function (airport) {
       return airport.country === country;
     });
 
   }
 
-  if (cityAirportCode.length > 1){
+  if (cityAirportCode.length > 1) {
     multilist = true;
   }
 
@@ -135,7 +129,7 @@ $("#city-search").on("click", function () {
 
   }
 
-  
+
 
 });
 
@@ -145,7 +139,7 @@ fnStepTwo(2)
 fnStepThree(3);
 fnStepFour(4);
 
-  console.log(cityAirportCode);
+
 
 
 var settings = {
@@ -164,6 +158,7 @@ $.ajax(settings).done(function (response) {
   console.log(response);
 });
 
+
 // fnTranslate("generate")
 
 //ajax call for Skyscanner
@@ -175,7 +170,21 @@ function fnSave() {
   // add primary destination to local obj array
 }
 
-function fnReset() {}
+function fnReset() { }
+
+//the api glue
+fnCountryData()
+function fnCountryData() {
+  var request = `https://restcountries.eu/rest/v2/name/${currentTrip.countryName}`
+  $.ajax({
+    url: request,
+    method: "GET",
+  }).then(function (res) {
+    currentTrip.currency = res[0].currencies[0].code
+    currentTrip.lang = res[0].languages[0].iso639_1
+
+  })
+}
 
 function fnTranslate(action) {
   // shuffle phrases
@@ -235,7 +244,7 @@ function fnTranslate(action) {
 
 // step functions
 function fnStepOne() {
-  // blank for initializing page
+  savedTrips = JSON.parse(localStorage.getItem("savedTrips"))
 }
 
 // 2
@@ -353,7 +362,7 @@ function fnStepThree(st) {
 
       cardContent.append(cardTitle, cardText);
       // add shuffle button
-      if(i==1) {
+      if (i == 1) {
         cardContent.append(cardAction)
         $('#shuffle').on('click', fnTranslate('shuffle'))
       }
