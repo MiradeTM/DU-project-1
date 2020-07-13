@@ -14,6 +14,32 @@ var departureList = [];
 
 
 
+let currentTrip = {
+  lang: "",
+  currency: "",
+};
+let savedTrips = [];
+
+let translation = {
+  phrases: [
+    "Hello",
+    "Do you speak English?",
+    "Please",
+    "Thank You",
+    "Excuse me.",
+    "Where is the bathroom?",
+    "Cheers!",
+    "I’m sorry",
+    "How much does it cost?",
+    "What’s your name?",
+    "Sorry, I Don’t Understand",
+    "Goodbye",
+  ],
+  target: [],
+  targetName: "",
+};
+
+
 $("#city-search").on("click", function () {
   var multilist = false;
   var multicountries = false;
@@ -32,12 +58,8 @@ $("#city-search").on("click", function () {
   fnStepTwo(2);
   var city = $("#outboundCity").val();
 
-  $("html, body").animate(
-    {
-      scrollTop: $(`#step-2`).offset().top,
-    },
-    2000
-  );
+  // jQuery move
+  fnMove(2);
 
   var cityAirportCode = airports.filter(function (forecast) {
     return forecast.city.includes(city);
@@ -90,6 +112,7 @@ $("#city-search").on("click", function () {
       return false;
     }
   }
+
 
   if (multicountries) {
 
@@ -152,13 +175,60 @@ function fnSave() {
 
 function fnReset() {}
 
-function fnTranslate(data) {
-  // get data
-  // origin lang -> new lang
-  // edit data for formatting
-  // ajax request
-  // parse response
-  // send data to data hooks
+function fnTranslate(action) {
+  // shuffle phrases
+  for (let i = translation.phrases.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i);
+    const temp = translation.phrases[i];
+    translation.phrases[i] = translation.phrases[j];
+    translation.phrases[j] = temp;
+  }
+
+  if (action === "generate") {
+    let googleKey = "AIzaSyBvAzIcdH6h1MADdn0MMEdWsMgB0HyR0Sg";
+    $("#Phrases-title").text(`Phrases in ${translation.targetName}`);
+    let targetLang = currentTrip.lang;
+    targetLang = "";
+    translation.phrases.forEach(function (phrase, i) {
+      // translate request // working
+      $.ajax({
+        url: `https://translation.googleapis.com/language/translate/v2?target=${targetLang}&key=${googleKey}&q=${phrase}`,
+        method: "GET",
+      }).then(function (res) {
+        // current language translation
+        translation.target[i] = res.data.translations[0].translatedText;
+
+        // add list to existing cards
+        if (i <= 2) {
+          let listTable = $("#Phrases-text");
+          let listRow = $("<tr>");
+          let listItem1 = $(`<td id='phrase-${i}'>`).text(
+            translation.phrases[i]
+          );
+          let listItem2 = $(`<td id='phraseTarget-${i}'>`).text(
+            translation.target[i]
+          );
+          listRow.append(listItem1);
+          listRow.append(listItem2);
+          listTable.append(listRow);
+        }
+      });
+    });
+  } else if (action === "shuffle") {
+    $("#Phrases");
+    // shuffle phrases
+    for (let i = translation.phrases.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * i);
+      const temp = translation.phrases[i];
+      translation.phrases[i] = translation.phrases[j];
+      translation.phrases[j] = temp;
+    }
+
+    for (let i = 0; i <= 2; i++) {
+      $(`<td id='phrase-${i}'>`).text(translation.phrases[i]);
+      $(`<td id='phraseTarget-${i}'>`).text(translation.target[i]);
+    }
+  }
 }
 
 // step functions
@@ -170,7 +240,6 @@ function fnStepOne() {
 function fnStepTwo(st) {
   if ($(`#step-${st}`).length) {
     // already exists
-    // console.log("it exists");
   } else {
     fnCommonRow(st);
     fnCreateParallax(st);
@@ -215,16 +284,14 @@ function fnStepTwo(st) {
     el3.append(btn1);
     row2.append(el3);
     $("#more-info").on("click", function () {
-      // event delegation workaround
       fnStepThree(3);
 
-      // ! jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-3`).offset().top,
-        },
-        2000
-      );
+      // data actions
+      // translate
+      fnTranslate("generate");
+
+      // jQuery move
+      fnMove(3);
     });
 
     // jump to compare button
@@ -239,13 +306,8 @@ function fnStepTwo(st) {
       // event delegation workaround
       fnStepFour(4);
 
-      // ! jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-4`).offset().top,
-        },
-        2000
-      );
+      // jQuery move
+      fnMove(4);
     });
   }
 }
@@ -274,12 +336,25 @@ function fnStepThree(st) {
       let col = $(`<div class="col m4">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
-      let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`);
+      let cardText;
+      let cardAction;
+      if (i == 1) {
+        cardText = $(`<table id="${cardOrder[i]}-text" class='highlight'>`);
+        cardAction = $("<div class='card-action'>")
+        cardAction.append($(`<a id='#shuffle'>`).text('Shuffle Phrases'))
+      } else {
+        cardText = $(`<p id="${cardOrder[i]}-text">`);
+        cardText.text("I am a card.");
+      }
+      let cardTitle = $(`<span class="card-title" id="${cardOrder[i]}-title">`);
       cardTitle.text("Title");
-      let cardText = $(`<p id="card${cardOrder[i]}">`);
-      cardText.text("I am a card.");
 
       cardContent.append(cardTitle, cardText);
+      // add shuffle button
+      if(i==1) {
+        cardContent.append(cardAction)
+        $('#shuffle').on('click', fnTranslate('shuffle'))
+      }
       card.append(cardContent);
       col.append(card);
       row1.append(col);
@@ -299,13 +374,8 @@ function fnStepThree(st) {
       // event delegation workaround
       fnStepFour(4);
 
-      // ! jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-4`).offset().top,
-        },
-        2000
-      );
+      // jQuery move
+      fnMove(4);
     });
   }
 }
@@ -373,13 +443,8 @@ function fnStepFour(st) {
     el4.append(btn2);
     row2.append(el4);
     $("#search-again").on("click", function () {
-      // ! jquery move
-      $("html, body").animate(
-        {
-          scrollTop: $(`#step-1`).offset().top,
-        },
-        2000
-      );
+      // jQuery move
+      fnMove(1);
       fnReset();
     });
 
@@ -387,7 +452,7 @@ function fnStepFour(st) {
     let cardRow = $("#savedGallery");
 
     // cards for previous entries
-    for (let i = 1; i <= saved.length; i++) {
+    for (let i = 0; i <= savedTrips.length; i++) {
       let col = $(`<div class="col m4">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
@@ -445,9 +510,19 @@ function fnCreateParallax(s) {
     el1.append(el5);
     el5.append(el6);
     // ! Images not appearing when created dynamically
-    // $(`parallax-${s}`).trigger('resize').trigger('scroll')
+    jQuery(`parallax-${s}`).trigger("resize").trigger("scroll");
 
     el1.append(el2);
     $("#main-content").append(el1);
   }
+}
+
+function fnMove(s) {
+  // jquery move
+  $("html, body").animate(
+    {
+      scrollTop: $(`#step-${s}`).offset().top,
+    },
+    2000
+  );
 }
