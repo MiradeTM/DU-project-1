@@ -15,24 +15,19 @@ var departureList = [];
 
 
 $("#city-search").on("click", function () {
-<<<<<<< HEAD
   var multilist = false;
   var multicountries = false;
-=======
->>>>>>> master
   // ? CREATE/CHECK ELEMENTS FIRST
   // If the elements already exist, remove them
   // ? QUERY APIs
   // ? POPULATE ELEMENTS VIA IDs & CLASSES
   // ? MOVE PAGE VIA JQUERY
-<<<<<<< HEAD
   var city = $("#outboundCity").val();
   var arrivalCity = $("#inboundCity").val();
   var testing = airports.filter(function(something){
     //filters out info for arrival city
     return something.city.includes(arrivalCity);
   })
-=======
   console.log("click");
   fnStepTwo(2);
   var city = $("#outboundCity").val();
@@ -44,7 +39,6 @@ $("#city-search").on("click", function () {
     2000
   );
 
->>>>>>> master
   var cityAirportCode = airports.filter(function (forecast) {
     return forecast.city.includes(city);
     // define a variable for airport code
@@ -73,7 +67,6 @@ $("#city-search").on("click", function () {
     console.log(response);
   });
 
-<<<<<<< HEAD
   
   
 
@@ -81,7 +74,7 @@ $("#city-search").on("click", function () {
   // checks if there is more than one airport for that location
   //wanted to start i @ 0 but causes issue if only one airport
   for (var i = 0; i < cityAirportCode.length; i++) {
-    if (cityAirportCode[i+1].country !== cityAirportCode[i].country) {
+    if (cityAirportCode[i].country !== cityAirportCode[i].country) {
       //need to make modal list of first 5 countries to choose from
       console.log(cityAirportCode[i].country);
       departureList.push(cityAirportCode[0].country,cityAirportCode[1].country);
@@ -119,7 +112,7 @@ $("#city-search").on("click", function () {
 
   }
 
-  
+  console.log(cityAirportCode);
 
 });
 
@@ -129,9 +122,8 @@ fnStepTwo(2)
 fnStepThree(3);
 fnStepFour(4);
 
-=======
-  console.log(cityAirportCode);
-});
+  
+
 
 var settings = {
   async: true,
@@ -149,7 +141,6 @@ $.ajax(settings).done(function (response) {
   console.log(response);
 });
 
->>>>>>> master
 //ajax call for Skyscanner
 
 
@@ -177,57 +168,6 @@ function fnStepOne() {
 
 // 2
 function fnStepTwo(st) {
-<<<<<<< HEAD
-  fnCommonRow(st);
-  fnCreateParallax(st);
-
-  let row1 = $(`<div class="row">`);
-  let row2 = $(`<div class="row">`);
-  // attach to #step-${st}
-  $(`#step-${st}`).append(row1);
-  $(`#step-${st}`).append(row2);
-
-  // row 1 // image & flight info
-  // image
-  let el1 = $(`<div class="col m3">`);
-  let imageArea = $(
-    `<img class="primary-destination-img" id="prime-img" src="">`
-  );
-  el1.append(imageArea);
-  // ? DATA HOOKS
-  // ! data query should send to class
-  row1.append(el1);
-
-  // flight info
-  let el2 = $(`<div class="col m9">`);
-  let elHead = $(`<h2 class="primary-destination-head" id="prime-head">`);
-  let elInfo = $(`<p class="primary-destination-info" id="prime-info">`);
-  elInfo.text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-  // ? DATA HOOKS
-  // ! data query should send to class
-  el2.append(elHead);
-  el2.append(elInfo);
-  row1.append(el2);
-
-  // row 2 // buttons
-  // more info button
-  let el3 = $(`<div class="col m6" style="text-align:right;">`);
-  let btn1 = $(`<a id="more-info" data-step="3"
-	class="btn-large waves-effect waves-light new-red-lighten-1"
-	>`);
-  btn1.text("See More Info");
-  el3.append(btn1);
-  row2.append(el3);
-
-  // jump to compare button
-  let el4 = $(`<div class="col m6">`);
-  let btn2 = $(`<a id="compare" data-step="4"
-	class="btn-large waves-effect waves-light new-red-lighten-1"
-	>`);
-  btn2.text("Compare");
-  el4.append(btn2)
-  row2.append(el4)
-=======
   if ($(`#step-${st}`).length) {
     // already exists
     // console.log("it exists");
@@ -308,52 +248,10 @@ function fnStepTwo(st) {
       );
     });
   }
->>>>>>> master
 }
 
 // 3
 function fnStepThree(st) {
-<<<<<<< HEAD
-  fnCommonRow(st);
-  fnCreateParallax(st);
-
-  let cardOrder = ["Weather", "Phrases", "Currency"]
-
-  let row1 = $(`<div class="row">`);
-  let row2 = $(`<div class="row">`);
-
-  // attach to #step-${st}
-  console.log($(`#step-${st}`))
-  $(`#step-${st}`).append(row1);
-  $(`#step-${st}`).append(row2);
-
-  // row 1 // cards
-  for (let i = 0; i <= 2; i++) {
-    let col = $(`<div class="col m4">`);
-    let card = $(`<div class="card">`)
-    let cardContent = $(`<div class="card-content">`)
-    let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`)
-    cardTitle.text("Title")
-    let cardText = $(`<p id="card${cardOrder[i]}">`)
-    cardText.text("I am a card.")
-
-    cardContent.append(cardTitle, cardText)
-    card.append(cardContent)
-    col.append(card)
-    row1.append(col)
-  }
-
-  //row 2 // button
-  let ltCol = $(`<div class="col m5">`);
-  let rtCol = $(`<div class="col m5">`);
-  let ctCol = $(`<div class="col m2">`);
-  let btn = $(`<a id="compare" data-step="4"
-	class="btn-large waves-effect waves-light new-red-lighten-1"
-	>`);
-  btn.text("Compare");
-  ctCol.append(btn)
-  row2.append(ltCol, ctCol, rtCol)
-=======
   if ($(`#step-${st}`).length) {
     // already exists
     // console.log("it exists");
@@ -410,48 +308,10 @@ function fnStepThree(st) {
       );
     });
   }
->>>>>>> master
 }
 
 // 4
 function fnStepFour(st) {
-<<<<<<< HEAD
-  fnCommonRow(st);
-  fnCreateParallax(st);
-
-  let row1 = $(`<div class="row">`);
-  let row2 = $(`<div class="row">`);
-  // attach to #step-${st}
-  $(`#step-${st}`).append(row1);
-  $(`#step-${st}`).append(row2);
-
-  // row 1 // image & flight info
-  // image
-  let el1 = $(`<div class="col m3">`);
-  let imageArea = $(
-    `<img class="primary-destination-img" id="prime-img" src="">`
-  );
-  el1.append(imageArea);
-  // ? DATA HOOKS
-  // ! data query should send to class
-  row1.append(el1);
-
-  // flight info
-  let el2 = $(`<div class="col m9">`);
-  let elHead = $(`<h2 class="primary-destination-head" id="prime-head">`);
-  let elInfo = $(`<p class="primary-destination-info" id="prime-info">`);
-  elInfo.text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-  // ? DATA HOOKS
-  // ! data query should send to class
-  el2.append(elHead);
-  el2.append(elInfo);
-  row1.append(el2);
-
-  // row 2 // buttons
-  // Save
-  let el3 = $(`<div class="col m6" style="text-align:right;">`);
-  let btn1 = $(`<a id="save-item" data-step="3"
-=======
   if ($(`#step-${st}`).length) {
     // already exists
     // console.log("it exists");
@@ -493,7 +353,6 @@ function fnStepFour(st) {
     // Save
     let el3 = $(`<div class="col m6" style="text-align:right;">`);
     let btn1 = $(`<a id="save-item" data-step="3"
->>>>>>> master
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
     btn1.text("Save");
@@ -510,15 +369,6 @@ function fnStepFour(st) {
     let btn2 = $(`<a id="search-again" data-step="4"
 	class="btn-large waves-effect waves-light new-red-lighten-1"
 	>`);
-<<<<<<< HEAD
-  btn2.text("Search Again");
-  el4.append(btn2)
-  row2.append(el4)
-
-  // add cards within parallax
-  let cardRow = $("#jump-4")
-  cardRow = cardRow[0].children[0].children[0]
-=======
     btn2.text("Search Again");
     el4.append(btn2);
     row2.append(el4);
@@ -555,7 +405,6 @@ function fnStepFour(st) {
       row2.append(el4);
     }
   }
->>>>>>> master
 }
 
 // creates the first container and row common to each section, if they don't exist yet
