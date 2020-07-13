@@ -1,13 +1,28 @@
 // GLOBAL VARIABLES
-let current = {};
-let saved = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+let currentTrip = {
+  lang: "",
+  currency: "",
+};
+let savedTrips = [];
 
-//button 1 = city-search
-//button 2 = more-info
-//button 3 = compare
-//button 4 = compare2
-//button 5 = save-item
-//button 6 = search-again
+let translation = {
+  phrases: [
+    "Hello",
+    "Do you speak English?",
+    "Please",
+    "Thank You",
+    "Excuse me.",
+    "Where is the bathroom?",
+    "Cheers!",
+    "I’m sorry",
+    "How much does it cost?",
+    "What’s your name?",
+    "Sorry, I Don’t Understand",
+    "Goodbye",
+  ],
+  target: [],
+  targetName: "",
+};
 
 $("#city-search").on("click", function () {
   // ? CREATE/CHECK ELEMENTS FIRST
@@ -53,6 +68,8 @@ $.ajax(settings).done(function (response) {
   console.log(response);
 });
 
+// fnTranslate("generate")
+
 //ajax call for Skyscanner
 
 // action functions
@@ -62,13 +79,57 @@ function fnSave() {
 
 function fnReset() {}
 
-function fnTranslate(data) {
+function fnTranslate(action) {
   // get data
-  // origin lang -> new lang
+  // new lang from object: translation
   // edit data for formatting
   // ajax request
   // parse response
   // send data to data hooks
+  let googleKey = "AIzaSyBvAzIcdH6h1MADdn0MMEdWsMgB0HyR0Sg";
+
+  // shuffle phrases
+  for (let i = translation.phrases.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i);
+    const temp = translation.phrases[i];
+    translation.phrases[i] = translation.phrases[j];
+    translation.phrases[j] = temp;
+  }
+
+  if (action === "generate") {
+    let targetLang = currentTrip.lang;
+    targetLang = "es";
+    translation.phrases.forEach(function (phrase, i) {
+      // translate request // working
+
+      $.ajax({
+        url: `https://translation.googleapis.com/language/translate/v2?target=${targetLang}&key=${googleKey}&q=${phrase}`,
+        method: "GET",
+      }).then(function (res) {
+        // console.log(res.data.translations[0]);
+        translation.target[i] = res.data.translations[0].translatedText;
+      });
+    });
+    
+  }
+
+  console.log();
+
+  // ! this needs to go in data response somehow
+  // send phrase and translation to card
+  // 'Phrases-title'
+  $("#Phrases-title").text(`Phrases in ${translation.targetName}`);
+  // 'Phrases-text'
+  for (let i = 0; i <= 2; i++) {
+    let listTable = $("#Phrases-text")
+    let listRow = $("<tr>")
+    let listItem1 = $(`<td id='phrase-${i}'>`).text(translation.phrases[i]);
+    let listItem2 = $(`<td id='phrase-${i}'>`).text(translation.target[i]);
+    
+    listRow.append(listItem1)
+    listRow.append(listItem2)
+    listTable.append(listRow)
+  }
 }
 
 // step functions
@@ -125,10 +186,13 @@ function fnStepTwo(st) {
     el3.append(btn1);
     row2.append(el3);
     $("#more-info").on("click", function () {
-      // event delegation workaround
       fnStepThree(3);
 
-      // ! jquery move
+      // data actions
+      // translate
+      fnTranslate('generate');
+
+      // jquery move
       $("html, body").animate(
         {
           scrollTop: $(`#step-3`).offset().top,
@@ -149,7 +213,7 @@ function fnStepTwo(st) {
       // event delegation workaround
       fnStepFour(4);
 
-      // ! jquery move
+      // jquery move
       $("html, body").animate(
         {
           scrollTop: $(`#step-4`).offset().top,
@@ -184,17 +248,22 @@ function fnStepThree(st) {
       let col = $(`<div class="col m4">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
-      let cardTitle = $(`<span class="card-title" id="card-${cardOrder[i]}">`);
+      let cardText
+      if (i == 1) {
+        cardText = $(`<table id="${cardOrder[i]}-text" class='highlight'>`)
+      } else {
+        cardText = $(`<p id="${cardOrder[i]}-text">`);
+        cardText.text("I am a card.");
+      }
+      let cardTitle = $(`<span class="card-title" id="${cardOrder[i]}-title">`);
       cardTitle.text("Title");
-      let cardText = $(`<p id="card${cardOrder[i]}">`);
-      cardText.text("I am a card.");
 
       cardContent.append(cardTitle, cardText);
       card.append(cardContent);
       col.append(card);
       row1.append(col);
     }
-
+    
     //row 2 // button
     let ltCol = $(`<div class="col m5">`);
     let rtCol = $(`<div class="col m5">`);
@@ -209,7 +278,7 @@ function fnStepThree(st) {
       // event delegation workaround
       fnStepFour(4);
 
-      // ! jquery move
+      // jquery move
       $("html, body").animate(
         {
           scrollTop: $(`#step-4`).offset().top,
@@ -283,7 +352,7 @@ function fnStepFour(st) {
     el4.append(btn2);
     row2.append(el4);
     $("#search-again").on("click", function () {
-      // ! jquery move
+      // jquery move
       $("html, body").animate(
         {
           scrollTop: $(`#step-1`).offset().top,
@@ -355,7 +424,7 @@ function fnCreateParallax(s) {
     el1.append(el5);
     el5.append(el6);
     // ! Images not appearing when created dynamically
-    // $(`parallax-${s}`).trigger('resize').trigger('scroll')
+    jQuery(`parallax-${s}`).trigger("resize").trigger("scroll");
 
     el1.append(el2);
     $("#main-content").append(el1);
