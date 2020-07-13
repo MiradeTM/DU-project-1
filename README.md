@@ -55,5 +55,3 @@ https://steven.codes/typerjs/
 * DU-project-1 repository - 
 * Screenshot of Website -
 * Website Xmind map -   
-
-
