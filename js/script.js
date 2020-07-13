@@ -40,6 +40,11 @@ let translation = {
   targetName: "",
 };
 
+var weather ={
+  tempMax: '',
+  icon: '',
+  description: '',
+}
 
 $("#city-search").on("click", function () {
   var multilist = false;
@@ -181,6 +186,34 @@ $('#2').remove();
 $('#3').remove();
 $('#4').remove();  
 }
+
+function fnWeatherData(){
+    // var weatherCity= currentTrip.cityName
+    var weatherCity = 'denver'
+  var weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&units=imperial&appid=4269dfac7a15a389ebd794d9f326120d`
+  $.ajax({
+    url: weatherUrl,
+    method: 'get'
+  }).then(function(weath){
+    console.log(weath)
+    weather.tempMax = weath.main.temp_max
+    weather.icon = weath.weather[0].icon 
+    weather.description = weath.weather[0].description
+  // #weather-text
+  var weatherList = $('<ul>')
+  var iconImg = $('<img>').attr({
+    'src': `https://openweathermap.org/img/wn/${weather.icon}.png`,
+    'alt': 'weather icon'
+  })
+  var iconItem = $('<li>').append(iconImg)
+  var descriptionItem = $('<li>').text(`Forecast today includes: ${weather.description}`)
+  var tempItem = $('<li>').text(`The max temperature is: ${weather.tempMax}`)
+  weatherList.append(iconItem, descriptionItem, tempItem)
+  $('#weather-text').append(weatherList)
+    })
+    console.log(weather)
+}
+fnWeatherData()
 
 function fnTranslate(action) {
   // get data
@@ -356,7 +389,7 @@ function fnStepThree(st) {
         cardText = $(`<table id="${cardOrder[i]}-text" class='highlight'>`)
       } else {
         cardText = $(`<p id="${cardOrder[i]}-text">`);
-        cardText.text("I am a card.");
+       
       }
       let cardTitle = $(`<span class="card-title" id="${cardOrder[i]}-title">`);
       cardTitle.text("Title");
