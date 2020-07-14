@@ -181,7 +181,7 @@ function fnReset() {
   el1.append(el2);
   el2.append(el3);
   let el4 = $(`<div class='parallax'>`);
-  let el5 = $(`<img src='Assets/jumbo-1.png'>`);
+  let el5 = $(`<img src='assets/jumbo-1.png'>`);
   el1.append(el4);
   el4.append(el5);
 
@@ -191,7 +191,7 @@ function fnReset() {
   cel1.append(cel2);
   cel2.append(cel3);
   let cel4 = $(`<div class='parallax'>`);
-  let cel5 = $(`<img src='Assets/jumbo-1.png'>`);
+  let cel5 = $(`<img src='assets/jumbo-1.png'>`);
   cel1.append(cel4);
   cel4.append(cel5);
   $("#main-content").prepend(cel1)
@@ -576,7 +576,7 @@ function fnCreateParallax(s) {
     el2.append(el3);
     el3.append(el4);
     let el5 = $(`<div class='parallax'>`);
-    let el6 = $(`<img id='parallax-${s}' src='Assets/jumbo-${s}.png'>`);
+    let el6 = $(`<img id='parallax-${s}' src='assets/jumbo-${s}.png'>`);
     el1.append(el5);
     el5.append(el6);
     // ! Images not appearing when created dynamically
