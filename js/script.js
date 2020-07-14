@@ -72,7 +72,7 @@ function fnSearch() {
     //modal to confirm radio group select airport and confirm shoot down to second section, add submit button.
     //modal please select city
   })
-  console.log(testing);
+  
   // departCode = cityAirportCode[0].code;
   currentTrip.countryName = cityAirportCode[0].country;
   $("#prime-head").text(currentTrip.countryName);
@@ -356,21 +356,21 @@ function fnStepTwo(st) {
       fnMove(3);
     });
 
-    // jump to compare button
-    let el4 = $(`<div class="col m6">`);
-    let btn2 = $(`<a id="compare" data-step="4"
-		class="btn-large waves-effect waves-light new-red-lighten-1"
-		>`);
-    btn2.text("Compare");
-    el4.append(btn2);
-    row2.append(el4);
-    $("#compare").on("click", function () {
-      // event delegation workaround
-      fnStepFour(4);
+    // jump to compare button // ! Commented for demo
+    // let el4 = $(`<div class="col m6">`);
+    // let btn2 = $(`<a id="compare" data-step="4"
+		// class="btn-large waves-effect waves-light new-red-lighten-1"
+		// >`);
+    // btn2.text("Compare");
+    // el4.append(btn2);
+    // row2.append(el4);
+    // $("#compare").on("click", function () {
+    //   // event delegation workaround
+    //   fnStepFour(4);
 
-      // jQuery move
-      fnMove(4);
-    });
+    //   // jQuery move
+    //   fnMove(4);
+    // });
   }
 }
 
@@ -394,8 +394,8 @@ function fnStepThree(st) {
     $(`#step-${st}`).append(row2);
 
     // row 1 // cards
-    for (let i = 0; i <= 2; i++) {
-      let col = $(`<div class="col m4">`);
+    for (let i = 0; i <= 1; i++) {
+      let col = $(`<div class="col m6">`);
       let card = $(`<div class="card">`);
       let cardContent = $(`<div class="card-content">`);
       let cardText;
@@ -482,19 +482,19 @@ function fnStepFour(st) {
     row1.append(el2);
 
     // row 2 // buttons
-    // Save
-    let el3 = $(`<div class="col m6" style="text-align:right;">`);
-    let btn1 = $(`<a id="save-item" data-step="3"
-	class="btn-large waves-effect waves-light new-red-lighten-1"
-	>`);
-    btn1.text("Save");
-    el3.append(btn1);
-    row2.append(el3);
-    $("#save-item").on("click", function () {
-      // event delegation workaround
-      fnStepFour(4);
-      fnSave();
-    });
+    // Save // ! commented for demo
+  //   let el3 = $(`<div class="col m6" style="text-align:right;">`);
+  //   let btn1 = $(`<a id="save-item" data-step="3"
+	// class="btn-large waves-effect waves-light new-red-lighten-1"
+	// >`);
+  //   btn1.text("Save");
+  //   el3.append(btn1);
+  //   row2.append(el3);
+  //   $("#save-item").on("click", function () {
+  //     // event delegation workaround
+  //     fnStepFour(4);
+  //     fnSave();
+  //   });
 
     // Search again button
     let el4 = $(`<div class="col m6">`);
