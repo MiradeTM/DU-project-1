@@ -41,8 +41,7 @@ https://cloud.google.com/maps-platform/maps
 
 
 ### Typer.js - Third Party API
-* typing interface with a pure HTML interface
-* This typing interface is important for readability
+* cosmetic effect
 https://steven.codes/typerjs/
 
 #### Credits
