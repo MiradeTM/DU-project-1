@@ -80,12 +80,12 @@ $("#city-search").on("click", function () {
     //modal please select city
   })
   console.log(testing);
-  departCode = cityAirportCode[0].code;
+  // departCode = cityAirportCode[0].code;
   currentTrip.countryName = cityAirportCode[0].country;
   currentTrip.lat = cityAirportCode[0].lat;
   currentTrip.lon = cityAirportCode[0].lon;
 
-  var map = `https://maps.googleapis.com/maps/api/staticmap?center=${currentTrip.cityName}, ${currentTrip.countryName}&zoom=10&size=400x400&key=AIzaSyBlAblD7C-CUKPsTmGf4Z4L-Dw3uhksPXU`
+  var map = `https://maps.googleapis.com/maps/api/staticmap?center=${currentTrip.cityName},${currentTrip.countryName}&zoom=10&size=400x400&key=AIzaSyBlAblD7C-CUKPsTmGf4Z4L-Dw3uhksPXU`
 
 
 
@@ -354,7 +354,7 @@ function fnStepThree(st) {
     let row2 = $(`<div class="row">`);
 
     // attach to #step-${st}
-    console.log($(`#step-${st}`));
+    // console.log($(`#step-${st}`));
     $(`#step-${st}`).append(row1);
     $(`#step-${st}`).append(row2);
 
