@@ -228,7 +228,7 @@ function fnWeatherData(){
   })
   var iconItem = $('<li>').append(iconImg)
   var descriptionItem = $('<li>').text(`Forecast today includes: ${weather.description}`)
-  var tempItem = $('<li>').text(`The max temperature is: ${weather.tempMax}`)
+  var tempItem = $('<li>').text(`The max temperature is: ${weather.tempMax} F`)
   weatherList.append(iconItem, descriptionItem, tempItem)
   $('#weather-text').append(weatherList)
     })
