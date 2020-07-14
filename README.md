@@ -51,6 +51,6 @@ https://steven.codes/typerjs/
 * Steven (Paul) Ijames - https://github.com/Stevenijames
 
 ##### Project Repo, Screenshot of Website & Website Mindmap  
-* DU-project-1 repository - 
+* Elifino repository - 
 * Screenshot of Website -
 * Website Xmind map -   
