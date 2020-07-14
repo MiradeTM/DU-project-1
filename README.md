@@ -1,11 +1,11 @@
-# DU-project-1
+# Elifino - City Search, Maps and Language Translator
 GIVEN a city search dashboard with a form input
 WHEN I search for a city
 THEN I am presented with city weather, map and language translation for that city. That city is added to the search history
 * Search Bar
 
 ## User Story
-This website is for users interested in finding information for a city. This information is very useful for planning a trip, researching a location and getting translations of commonly asked questions. 
+This website is for users finding information for a city of interest. This site offers city weather, a map display and phrases translated of the inbound location. This information is very useful for planning a trip, researching a location and getting translations of commonly asked questions. This website's dynamic appearance and easy scrolling layout is not complicated. It is to the point and gives the user valuable information with just the input of a city name. 
 
 ### Skyscanner API 
 When I type the name of a city into the field country name, latitude and longitude are generated in the field
