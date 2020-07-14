@@ -64,6 +64,17 @@ p {
   }
 }
 
+@media (max-width: 480px) {
+  #compare {
+    margin-top: 5px;
+    margin-bottom: 5px
+  }
+  #search-again {
+    margin-top: 5px;
+    margin-bottom: 5px
+  }
+}
+
 .icon-block {
   padding: 0 15px;
 }

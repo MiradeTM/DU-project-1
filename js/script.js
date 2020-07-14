@@ -71,8 +71,9 @@ function fnSearch() {
     //set airport code.text
     //modal to confirm radio group select airport and confirm shoot down to second section, add submit button.
     //modal please select city
-  });
-  departCode = cityAirportCode[0].code;
+  })
+  console.log(testing);
+  // departCode = cityAirportCode[0].code;
   currentTrip.countryName = cityAirportCode[0].country;
   $("#prime-head").text(currentTrip.countryName);
   currentTrip.lat = cityAirportCode[0].lat;
@@ -388,7 +389,7 @@ function fnStepThree(st) {
     let row2 = $(`<div class="row">`);
 
     // attach to #step-${st}
-    console.log($(`#step-${st}`));
+    // console.log($(`#step-${st}`));
     $(`#step-${st}`).append(row1);
     $(`#step-${st}`).append(row2);
 
